@@ -9,7 +9,7 @@ const Navbar = ({ addPosition }) => {
     >
       <img src={logo} className="cursor-pointer" alt="Logo" />
 
-      <section className="flex gap-4 text-lg cursor-pointer">
+      <section className=" flex gap-4 text-lg cursor-pointer">
         <a className="text-white">Events</a>
         <a className="text-[var(--text-color-greyed)]">My Tickets</a>
         <a className="text-[var(--text-color-greyed)]">About Project</a>

@@ -43,10 +43,10 @@ const TicketSelection = () => {
   };
 
   return (
-    <section className="w-[700px] border border-[var(--color-tertiary)] rounded-[40px] flex flex-col gap-[32px] mx-auto text-white p-[48px] mb-[112px]">
+    <section className="w-[90%] md:w-[700px] border border-[var(--color-tertiary)] rounded-[40px] flex flex-col gap-[32px] mx-auto text-white p-[48px] mb-[112px]">
       {/* ticket selection header */}
       <section>
-        <section className="flex justify-between items-center">
+        <section className="sm:flex justify-between items-center">
           <p className="text-[32px] font-main">Ticket Selection</p>
           <p className="text-base font-roboto">Step 1/3</p>
         </section>
@@ -62,7 +62,7 @@ const TicketSelection = () => {
         className="bg-[var(--color-dark-green)] p-[24px] border-x-2 border-b-2 border-[var(--color-grey-green)] rounded-[32px] flex flex-col gap-[32px]"
       >
         {/* Techember sign */}
-        <section className="text-center">
+        <section className="text-center w-full">
           <p className="font-roadrage text-[62px]">Techember Fest &quot;25</p>
           <p className="font-roboto-text-regular">
             Join an unforgettable experience at [Event Name]! Secure your spot
