@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import TicketTypeButton from "./TicketTypeButton";
+import TicketTypeButton from "./ticketTypeButton";
 import TransparentButton from "./transparentBgButton";
 import FilledButton from "./filledBgButton";
 
