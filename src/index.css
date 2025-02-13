@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #02191d;
+  --color-secondary: #197686;
+  --color-tertiary: #0e464f;
+  --color-light-blue: #24a0b5;
+  --color-dark-green: #08252b;
+  --color-darker-green: #052228;
+  --color-grey-green: #07373f;
+  --text-color-dark: #0a0c11;
+  --text-color-greyed: #b3b3b3;
+  --color-lighter-blue: #2ba4b9;
+  --nav-bg: #05252c; /* still needs 40% opacity */
+  --page1-bg: #041e23;
+}
+
+/* special fonts */
+@font-face {
+  font-family: "JejuMyeongjo";
+  src: url("/assets/fonts/JejuMyeongjo-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-main {
+  font-family: "JejuMyeongjo", sans-serif;
+}
+
+.font-roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+.font-roadrage {
+  font-family: "Road Rage", sans-serif;
+}
+
+.font-alatsi {
+  font-family: "Alatsi", serif;
+}
+
+.font-roboto-text-regular {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+}
+
+/* gradient backgorunds */
+.background {
+  background: radial-gradient(
+      52.52% 32.71% at 50% 97.66%,
+      rgba(36, 160, 181, 0.2) 0%,
+      rgba(36, 160, 181, 0) 100%
+    ),
+    #02191d;
+}
