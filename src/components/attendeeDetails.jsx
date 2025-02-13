@@ -19,6 +19,7 @@ const AttendeeDetails = () => {
     formState: { errors },
   } = useForm({
     defaultValues: JSON.parse(localStorage.getItem("formData")) || {
+      avatarUrl,
       fullName: "",
       email: "",
       specialRequest: "",
@@ -34,8 +35,12 @@ const AttendeeDetails = () => {
     }
   }, [formData, avatarUrl]);
 
-  const onPrevious = (e) => {
-    e.preventDefault();
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent form submission when Enter is pressed
+    }
+  };
+  const onPrevious = () => {
     console.log("Navigating to previous");
     navigate("/");
   };
@@ -73,6 +78,7 @@ const AttendeeDetails = () => {
               className="w-full rounded-[12px] p-[12px] border border-[var(--color-grey-green)]"
               {...register("fullName", { required: "Full Name is required" })}
               aria-describedby="fullNameError"
+              onKeyDown={handleKeyDown}
             />
             {errors.fullName && (
               <p
@@ -104,6 +110,7 @@ const AttendeeDetails = () => {
                 },
               })}
               aria-describedby="emailError"
+              onKeyDown={handleKeyDown}
             />
             {errors.email && (
               <p
@@ -136,6 +143,7 @@ const AttendeeDetails = () => {
               placeholder="Textarea"
               className="h-[127px] rounded-[12px] p-[12px] border border-[var(--color-grey-green)]"
               {...register("specialRequest")}
+              onKeyDown={handleKeyDown}
             ></textarea>
           </section>
 

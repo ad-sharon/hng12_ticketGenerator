@@ -1,39 +1,59 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import axios from "axios";
-import cloud from "../assets/cloud-download.svg"; // Ensure the path is correct
+import cloud from "../assets/cloud-download.svg";
 
 const AvatarUpload = ({ setAvatarUrl }) => {
   const [image, setImage] = useState(null);
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [avatarClicked, setAvatarClicked] = useState(false);
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
 
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+
+  useEffect(() => {
+    const storedImage = localStorage.getItem("avatarImage");
+    console.log(storedImage);
+    if (storedImage) {
+      console.log("stored Image", storedImage);
+      setImage(storedImage);
+      setAvatarUrl(storedImage);
+    }
+  }, [image]);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setFile(selectedFile);
       setImage(URL.createObjectURL(selectedFile));
+      console.log(image);
+      handleFileUpload(selectedFile);
     }
   };
 
-  const handleFileUpload = async () => {
-    if (!file) return;
+  const handleFileUpload = async (selectedFile) => {
+    if (!selectedFile) return;
 
     setLoading(true);
 
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", selectedFile);
     formData.append("upload_preset", "hng_tickets");
+    console.log(formData);
 
     try {
       const response = await axios.post(
         `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
         formData
       );
+      console.log(response.data);
       setAvatarUrl(response.data.secure_url);
       setImage(response.data.secure_url);
+      console.log(image);
+      localStorage.setItem("avatarImage", response.data.secure_url);
     } catch (err) {
       console.error("An error occurred during the upload:", err);
     } finally {
@@ -42,9 +62,10 @@ const AvatarUpload = ({ setAvatarUrl }) => {
   };
 
   const handleAvatarReset = () => {
-    setAvatarClicked(true);
+    // setAvatarClicked(true);
     setImage(null);
     setFile(null);
+    localStorage.removeItem("avatarImage");
   };
 
   return (
@@ -67,13 +88,22 @@ const AvatarUpload = ({ setAvatarUrl }) => {
             )}
 
             <input
-              onClick={{ handleFileUpload }}
               onChange={handleFileChange}
               type="file"
               accept="image/*"
               id="avatarUpload"
               className="hidden"
+              aria-describedby="avatarError"
             />
+            {errors.avatar && (
+              <p
+                id="avatarError"
+                aria-live="polite"
+                className="text-red-500 text-sm"
+              >
+                {errors.avatar.message}
+              </p>
+            )}
           </label>
         </section>
 

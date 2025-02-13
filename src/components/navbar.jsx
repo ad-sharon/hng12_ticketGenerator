@@ -4,7 +4,7 @@ const Navbar = ({ addPosition }) => {
   return (
     <section
       className={`${
-        addPosition === true ? "absolute z-99 " : ""
+        addPosition === true ? "absolute z-99 hidden sm:flex" : ""
       } w-[85%] xl:w-[1200px] bg-[var(--nav-bg)] font-main h-[76px] border border-[var(--color-secondary)] rounded-3xl flex items-center justify-between py-[12px] px-[16px]  mx-auto mt-[24px]`}
     >
       <img src={logo} className="cursor-pointer" alt="Logo" />

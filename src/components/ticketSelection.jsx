@@ -17,7 +17,7 @@ const TicketSelection = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      ticketType: "",
+      ticketType: "REGULAR ACCESS",
       numberOfTickets: "",
     },
   });
@@ -98,7 +98,6 @@ const TicketSelection = () => {
             })}
             aria-describedby="TicketNumberError"
             tabIndex="0"
-            defaultValue={1}
           >
             <option value="1" className="text-black">
               1
