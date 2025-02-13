@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import TransparentButton from "./transparentBgButton";
 import FilledButton from "./filledBgButton";
-import AvatarUpload from "./AvatarUpload"; // Ensure the correct import
+import AvatarUpload from "./avatarUpload"; // Ensure the correct import
 
 const AttendeeDetails = () => {
   const navigate = useNavigate();
