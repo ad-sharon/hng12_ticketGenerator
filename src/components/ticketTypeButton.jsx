@@ -33,6 +33,7 @@ export default function TicketTypeButton({ setValue }) {
     <>
       {tickets.map((ticket, index) => (
         <button
+          type="button"
           key={index}
           onClick={() => handleClick(index)}
           className={`${
