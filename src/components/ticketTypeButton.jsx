@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 export default function TicketTypeButton({ setValue }) {
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(0);
 
   const tickets = [
     { ticketType: "REGULAR ACCESS", ticketAmount: "Free" },
@@ -13,7 +13,7 @@ export default function TicketTypeButton({ setValue }) {
     const selectedTicket = tickets[index].ticketType;
     setSelected(index);
     setValue("ticketType", selectedTicket); //set value in local storage
-    localStorage.setItem("ticketType", selectedTicket); //persist value
+    localStorage.setItem("ticketType", selectedTicket); //persist value in form
   };
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function TicketTypeButton({ setValue }) {
           onClick={() => handleClick(index)}
           className={`${
             selected === index ? "bg-[#12464E]" : ""
-          } cursor-pointer hover:bg-[#2c545b] w-[158px] flex flex-col gap-[20px] border border-[var(--color-secondary)] p-[12px] rounded-[12px]`}
+          } cursor-pointer hover:bg-[#2c545b] w-full sm:w-[158px] flex flex-col gap-[12px] sm:gap-[20px] border border-[var(--color-secondary)] p-[12px] rounded-[12px]`}
         >
           <p className="text-[24px] text-left">{ticket.ticketAmount}</p>
           <p className="text-left text-[16px]">

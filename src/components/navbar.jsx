@@ -5,18 +5,21 @@ const Navbar = ({ addPosition }) => {
     <section
       className={`${
         addPosition === true ? "absolute z-99 " : ""
-      } bg-[var(--nav-bg)] font-main w-[1200px] h-[76px] border border-[var(--color-secondary)] rounded-3xl flex items-center py-[12px] justify-between mx-auto px-[16px] mt-[24px]`}
+      } w-[85%] xl:w-[1200px] bg-[var(--nav-bg)] font-main h-[76px] border border-[var(--color-secondary)] rounded-3xl flex items-center justify-between py-[12px] px-[16px]  mx-auto mt-[24px]`}
     >
       <img src={logo} className="cursor-pointer" alt="Logo" />
 
-      <section className=" flex gap-4 text-lg cursor-pointer">
+      <section className="hidden md:flex gap-4 text-lg cursor-pointer">
         <a className="text-white">Events</a>
         <a className="text-[var(--text-color-greyed)]">My Tickets</a>
         <a className="text-[var(--text-color-greyed)]">About Project</a>
       </section>
 
-      <button className="bg-white rounded-xl flex items-center cursor-pointer px-[24px] py-[16px] text-[var(--text-color-dark)]">
-        MY TICKETS <img src={arrow} alt="right arrow" />
+      <button
+        type="button"
+        className="bg-white rounded-xl flex items-center cursor-pointer px-[24px] py-[16px] text-[var(--text-color-dark)]"
+      >
+        MY TICKETS <img src={arrow} className="ms-[8px]" alt="right arrow" />
       </button>
     </section>
   );

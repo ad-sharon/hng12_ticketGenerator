@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import TicketTypeButton from "./ticketTypeButton";
 import TransparentButton from "./transparentBgButton";
 import FilledButton from "./filledBgButton";
+import SpecialFormHeader from "./specialFormHeader";
 
 const TicketSelection = () => {
   const navigate = useNavigate();
@@ -36,42 +37,43 @@ const TicketSelection = () => {
     }
   }, [formData]);
 
+  const onCancel = (e) => {
+    e.preventDefault();
+    console.log("Resetting form...");
+    reset({ ticketType: " ", numberOfTickets: "" });
+    localStorage.removeItem("formData");
+  };
+
   const onSubmit = (formData) => {
     console.log(formData);
     localStorage.removeItem("formData");
+    console.log("removing data");
     navigate("/attendeeForm");
   };
 
   return (
-    <section className="w-[90%] md:w-[700px] border border-[var(--color-tertiary)] rounded-[40px] flex flex-col gap-[32px] mx-auto text-white p-[48px] mb-[112px]">
-      {/* ticket selection header */}
-      <section>
-        <section className="sm:flex justify-between items-center">
-          <p className="text-[32px] font-main">Ticket Selection</p>
-          <p className="text-base font-roboto">Step 1/3</p>
-        </section>
-        <section className="flex w-[100%]">
-          <div className="w-[232px] border-b-4 rounded-[5px] border-[var(--color-light-blue)]"></div>
-          <div className="w-[604px] border-b-4 rounded-[5px] border-[var(--color-tertiary)]"></div>
-        </section>
-      </section>
+    <section className="w-[95%] md:w-[700px] border border-[var(--color-tertiary)] rounded-[40px] flex flex-col gap-[32px] mx-auto text-white p-[48px] mb-[112px]">
+      <SpecialFormHeader topic={"Ticket Selection"} stepValue={1} />
 
       {/* Techember section */}
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-[var(--color-dark-green)] p-[24px] border-x-2 border-b-2 border-[var(--color-grey-green)] rounded-[32px] flex flex-col gap-[32px]"
+        className="w-full bg-[var(--color-dark-green)] px-[24px] py-[16px] sm:py-[24px] border-x-2 border-b-2 border-[var(--color-grey-green)] rounded-[32px] flex flex-col gap-[32px]"
       >
         {/* Techember sign */}
-        <section className="text-center w-full">
-          <p className="font-roadrage text-[62px]">Techember Fest &quot;25</p>
-          <p className="font-roboto-text-regular">
+        <section className="text-center border border-black">
+          <p className="whitespace-nowrap font-roadrage text-[48px] sm:text-[62px] ">
+            Techember Fest &quot;25
+          </p>
+          <p className="text-[14px] font-roboto sm:font-roboto-text-regular">
             Join an unforgettable experience at [Event Name]! Secure your spot
             now.
           </p>
-          <p className="font-roboto-text-regular pt-[16px]">
-            LocationEmoji [Event Location] <span> | | </span> March 15, 2025 |
-            7:00 PM
-          </p>
+          <section className="w-full mt-7 justify-center items-center block sm:flex font-roboto-text-regular pt-[16px]">
+            <p>📍[Event Location] </p>
+            <span className="hidden sm:block mx-3"> | | </span>
+            <p>March 15, 2025 | 7:00 PM</p>
+          </section>
         </section>
 
         <hr className="h-[4px] bg-[var(--color-grey-green)] border-0" />
@@ -79,7 +81,7 @@ const TicketSelection = () => {
         {/* Ticket type section */}
         <section className="flex flex-col gap-[8px]">
           <p className="font-roboto-text-regular">Select Ticket Type:</p>
-          <section className="w-[100%] flex justify-between rounded-[24px] bg-[var(--color-darker-green)] p-[16px] border border-[var(--color-grey-green)] shadow-inner ">
+          <section className="w-full flex flex-col gap-[16px] sm:flex sm:flex-row justify-between rounded-[24px] bg-[var(--color-darker-green)] p-[16px] border border-[var(--color-grey-green)] shadow-inner ">
             <TicketTypeButton setValue={setValue} />
           </section>
         </section>
@@ -88,7 +90,7 @@ const TicketSelection = () => {
         <section className="flex flex-col gap-[8px]">
           <p className="font-roboto-text-regular">Number of Tickets</p>
           <select
-            className="border border-[var(--color-grey-green)]  rounded-[12px] p-[12px] cursor-pointer"
+            className="border border-[var(--color-grey-green)] rounded-[12px] p-[12px] cursor-pointer"
             name="numberOfTickets"
             id="numberOfTickets"
             {...register("numberOfTickets", {
@@ -96,6 +98,7 @@ const TicketSelection = () => {
             })}
             aria-describedby="TicketNumberError"
             tabIndex="0"
+            defaultValue={1}
           >
             <option value="1" className="text-black">
               1
@@ -119,9 +122,15 @@ const TicketSelection = () => {
         </section>
 
         {/* Cancel and Next buttons */}
-        <section className="w-full gap-[24px] flex ">
-          <TransparentButton text={"Cancel"} />
+        <section className="w-full gap-[24px] hidden sm:flex ">
+          <TransparentButton text={"Cancel"} onClick={onCancel} />
           <FilledButton text={"Next"} onClick={handleSubmit(onSubmit)} />
+        </section>
+
+        {/* for mobile */}
+        <section className="w-full gap-[16px] flex flex-col sm:hidden ">
+          <FilledButton text={"Next"} onClick={handleSubmit(onSubmit)} />
+          <TransparentButton text={"Cancel"} onClick={onCancel} />
         </section>
       </form>
     </section>

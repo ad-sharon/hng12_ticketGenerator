@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import TransparentButton from "./transparentBgButton";
 import FilledButton from "./filledBgButton";
-import AvatarUpload from "./avatarUpload"; // Ensure the correct import
+import AvatarUpload from "./avatarUpload";
+import SpecialFormHeader from "./specialFormHeader";
 
 const AttendeeDetails = () => {
   const navigate = useNavigate();
@@ -26,13 +27,18 @@ const AttendeeDetails = () => {
 
   const formData = watch();
 
-  // Handle page reload data storage and updates
   useEffect(() => {
     localStorage.setItem("formData", JSON.stringify(formData));
     if (avatarUrl) {
-      localStorage.setItem("avatarUrl", avatarUrl); // Store the avatar URL
+      localStorage.setItem("avatarUrl", avatarUrl);
     }
   }, [formData, avatarUrl]);
+
+  const onPrevious = (e) => {
+    e.preventDefault();
+    console.log("Navigating to previous");
+    navigate("/");
+  };
 
   const onSubmit = (data) => {
     console.log("Form data:", data);
@@ -42,39 +48,15 @@ const AttendeeDetails = () => {
   };
 
   return (
-    <section className="w-[700px] border border-[var(--color-tertiary)] rounded-[40px] flex flex-col gap-[32px] mx-auto text-white p-[48px] mb-[112px]">
-      <section>
-        <section className="flex justify-between items-center">
-          <p className="text-[32px] font-main">Attendee Details</p>
-          <p className="text-base font-roboto">Step 2/3</p>
-        </section>
-        <section className="flex w-[100%]">
-          <div className="w-[232px] border-b-4 rounded-[5px] border-[var(--color-light-blue)]"></div>
-          <div className="w-[604px] border-b-4 rounded-[5px] border-[var(--color-tertiary)]"></div>
-        </section>
-      </section>
+    <section className="w-[95%] md:w-[700px] border border-[var(--color-tertiary)] rounded-[40px] flex flex-col gap-[32px] mx-auto text-white p-[48px] mb-[112px]">
+      <SpecialFormHeader topic={"Attendee Details"} stepValue={2} />
 
-      <form onSubmit={handleSubmit(onSubmit)} action="">
-        <section className="bg=[var(--color-dark-green)] p-[24px] border-x-2 border-b-2 border-[var(--color-grey-green)] rounded-[32px] flex flex-col gap-[32px]">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <section className="w-full bg=[var(--color-dark-green)] p-[24px] border-x-2 border-b-2 border-[var(--color-grey-green)] rounded-[32px] flex flex-col gap-[32px]">
+          {/* Avatar Section */}
           <section className="flex flex-col gap-[32px] px-[24px] pt-[24px] pb-[48px] rounded-[24px] border border-[var(--color-darker-green)] shadow-inner">
             <p className="font-roboto-text-regular">Upload Profile Photo</p>
-
-            {/* Avatar Upload Section */}
             <AvatarUpload setAvatarUrl={setAvatarUrl} />
-
-            {/* Avatar Preview (if available) */}
-            {avatarUrl && (
-              <section className="flex flex-col items-center">
-                <img
-                  src={avatarUrl}
-                  alt="Avatar Preview"
-                  width="150"
-                  height="150"
-                  className="rounded-full"
-                />
-                <p className="mt-2 text-sm text-gray-500">Uploaded Avatar</p>
-              </section>
-            )}
           </section>
 
           <hr className="h-[4px] bg-[var(--color-grey-green)] border-0" />
@@ -91,7 +73,6 @@ const AttendeeDetails = () => {
               className="w-full rounded-[12px] p-[12px] border border-[var(--color-grey-green)]"
               {...register("fullName", { required: "Full Name is required" })}
               aria-describedby="fullNameError"
-              tabIndex="0"
             />
             {errors.fullName && (
               <p
@@ -119,11 +100,10 @@ const AttendeeDetails = () => {
                 required: "Email is required",
                 pattern: {
                   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                  message: "Invalid email format. Enter a valid email address",
+                  message: "Invalid email format.",
                 },
               })}
               aria-describedby="emailError"
-              tabIndex="0"
             />
             {errors.email && (
               <p
@@ -140,9 +120,15 @@ const AttendeeDetails = () => {
           <section className="flex flex-col gap-[8px]">
             <label
               htmlFor="specialRequest"
-              className="font-roboto-text-regular"
+              className="hidden sm:block font-roboto-text-regular"
             >
               Special Request?
+            </label>
+            <label
+              htmlFor="specialRequest"
+              className="block sm:hidden font-roboto-text-regular"
+            >
+              About the Project
             </label>
             <textarea
               name="specialRequest"
@@ -153,10 +139,19 @@ const AttendeeDetails = () => {
             ></textarea>
           </section>
 
-          {/* Buttons */}
-          <section className="w-full gap-[24px] flex">
-            <TransparentButton text={"Back"} />
+          {/* buttons */}
+          <section className="w-full gap-[24px] hidden sm:flex ">
+            <TransparentButton text={"Back"} onClick={onPrevious} />
             <FilledButton text={"Get My Free Ticket"} />
+          </section>
+
+          {/* for mobile */}
+          <section className="w-full gap-[16px] flex flex-col sm:hidden ">
+            <FilledButton
+              text={"Get My Free Ticket"}
+              onClick={handleSubmit(onSubmit)}
+            />
+            <TransparentButton text={"Cancel"} onClick={onPrevious} />
           </section>
         </section>
       </form>
