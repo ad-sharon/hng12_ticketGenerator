@@ -39,6 +39,8 @@ const AvatarUpload = ({ setAvatarUrl }) => {
     formData.append("upload_preset", "hng_tickets");
     console.log(formData);
 
+    console.log(cloudName);
+
     try {
       const response = await axios.post(
         `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
@@ -50,7 +52,10 @@ const AvatarUpload = ({ setAvatarUrl }) => {
       console.log(image);
       localStorage.setItem("avatarImage", response.data.secure_url);
     } catch (err) {
-      console.error("An error occurred during the upload:", err);
+      console.error(
+        "Upload failed:",
+        err.response ? err.response.data : err.message || "Unknown"
+      );
     } finally {
       setLoading(false);
     }
