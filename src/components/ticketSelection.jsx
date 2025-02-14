@@ -79,7 +79,7 @@ const TicketSelection = () => {
         {/* Ticket type section */}
         <section className="flex flex-col gap-2">
           <p className="font-roboto text-base">Select Ticket Type:</p>
-          <section className="w-full flex flex-col gap-4 sm:flex sm:flex-row justify-between rounded-3xl bg-[var(--color-darker-green)] p-4 border border-[var(--color-grey-green)] shadow-inner">
+          <section className="w-full flex flex-col gap-4 sm:flex sm:flex-row justify-between rounded-3xl bg-[var(--color-darker-green)] p-4 border border-[var(--color-greyish-green)] shadow-inner">
             <TicketTypeButton setValue={setValue} />
           </section>
         </section>
@@ -88,7 +88,7 @@ const TicketSelection = () => {
         <section className="flex flex-col gap-2">
           <p className="font-roboto text-base">Number of Tickets</p>
           <select
-            className="border border-[var(--color-grey-green)] rounded-3 p-3 cursor-pointer"
+            className="border border-[var(--color-greyish-green)] rounded-xl p-3 cursor-pointer"
             name="numberOfTickets"
             id="numberOfTickets"
             {...register("numberOfTickets", {
