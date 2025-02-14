@@ -48,9 +48,16 @@ const TicketDownload = () => {
       <section
         className={`absolute hidden top-25 sm:flex md:hidden z-99 justify-between w-[80%] p-1 font-main text-lg cursor-pointer`}
       >
-        <a className="text-white">Events</a>
+        <a className="text-white" onClick={() => navigate("/")}>
+          Events
+        </a>
         <a className="text-[var(--text-color-greyed)]">My Tickets</a>
-        <a className="text-[var(--text-color-greyed)]">About Project</a>
+        <a
+          className="text-[var(--text-color-greyed)]"
+          onClick={() => navigate("/about")}
+        >
+          About Project
+        </a>
       </section>
 
       <section className="w-[95%] md:w-[700px] border border-[var(--color-tertiary)] rounded-[40px] flex flex-col gap-8 text-[var(--text-color-light)] p-12">

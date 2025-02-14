@@ -57,7 +57,7 @@ const Navbar = ({ addPosition }) => {
           addPosition === true ? "hidden" : "flex md:hidden"
         } w-full font-main justify-center gap-9 text-lg cursor-pointer`}
       >
-        <a className="text-white" onClick={() => navigate("/about")}>
+        <a className="text-white" onClick={() => navigate("/")}>
           Events
         </a>
         <a className="text-[var(--text-color-greyed)]">My Tickets</a>
