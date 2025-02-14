@@ -23,7 +23,8 @@
 /* special fonts */
 @font-face {
   font-family: "JejuMyeongjo";
-  src: url("/assets/fonts/JejuMyeongjo-Regular.ttf") format("truetype");
+  src: url("/assets/fonts/JejuMyeongjo-Regular.woff2") format("woff2"),
+    url("/assets/fonts/JejuMyeongjo-Regular.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
