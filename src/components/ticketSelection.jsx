@@ -17,8 +17,8 @@ const TicketSelection = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      ticketType: "REGULAR ACCESS",
-      numberOfTickets: "",
+      ticketType: "REGULAR",
+      numberOfTickets: "1",
     },
   });
 
@@ -46,13 +46,13 @@ const TicketSelection = () => {
 
   const onSubmit = (formData) => {
     console.log(formData);
-    localStorage.removeItem("formData");
-    console.log("removing data");
+    // localStorage.removeItem("formData");
+    // console.log("removing data", formData);
     navigate("/attendeeForm");
   };
 
   return (
-    <section className="w-[95%] md:w-[700px] border border-[var(--color-tertiary)] rounded-[40px] flex flex-col gap-[32px] mx-auto text-white p-[48px] mb-[112px]">
+    <section className="bg-[#041e23] w-[95%] md:w-[700px] border border-[var(--color-tertiary)] rounded-[40px] flex flex-col gap-[32px] mx-auto text-white p-[48px] mb-[112px]">
       <SpecialFormHeader topic={"Ticket Selection"} stepValue={1} />
 
       {/* Techember section */}
@@ -61,15 +61,15 @@ const TicketSelection = () => {
         className="w-full bg-[var(--color-dark-green)] px-[24px] py-[16px] sm:py-[24px] border-x-2 border-b-2 border-[var(--color-grey-green)] rounded-[32px] flex flex-col gap-[32px]"
       >
         {/* Techember sign */}
-        <section className="text-center border border-black">
-          <p className="whitespace-nowrap font-roadrage text-[48px] sm:text-[62px] ">
+        <section className="techember-bg text-center border-x border-b border-[#07373F] rounded-[24px] shadow-inner p-[14px] sm:p-[20px]">
+          <p className="w-full whitespace-nowrap font-roadrage text-[48px] sm:text-[62px] ">
             Techember Fest &quot;25
           </p>
-          <p className="text-[14px] font-roboto sm:font-roboto-text-regular">
+          <p className="w-full sm:max-w-[340px] mx-auto text-[14px] font-roboto sm:font-roboto-text-regular">
             Join an unforgettable experience at [Event Name]! Secure your spot
             now.
           </p>
-          <section className="w-full mt-7 justify-center items-center block sm:flex font-roboto-text-regular pt-[16px]">
+          <section className="w-full mt-7 sm:mt-0 justify-center items-center block sm:flex font-roboto-text-regular pt-[16px]">
             <p>📍[Event Location] </p>
             <span className="hidden sm:block mx-3"> | | </span>
             <p>March 15, 2025 | 7:00 PM</p>
@@ -98,6 +98,7 @@ const TicketSelection = () => {
             })}
             aria-describedby="TicketNumberError"
             tabIndex="0"
+            defaultValue={1}
           >
             <option value="1" className="text-black">
               1

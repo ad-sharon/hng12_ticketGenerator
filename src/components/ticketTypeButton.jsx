@@ -4,9 +4,9 @@ export default function TicketTypeButton({ setValue }) {
   const [selected, setSelected] = useState(0);
 
   const tickets = [
-    { ticketType: "REGULAR ACCESS", ticketAmount: "Free" },
-    { ticketType: "VIP ACCESS", ticketAmount: "$50" },
-    { ticketType: "VVIP ACCESS", ticketAmount: "$150" },
+    { ticketType: "REGULAR", ticketAmount: "Free" },
+    { ticketType: "VIP", ticketAmount: "$50" },
+    { ticketType: "VVIP", ticketAmount: "$150" },
   ];
 
   const handleClick = (index) => {
@@ -38,11 +38,11 @@ export default function TicketTypeButton({ setValue }) {
           onClick={() => handleClick(index)}
           className={`${
             selected === index ? "bg-[#12464E]" : ""
-          } cursor-pointer hover:bg-[#2c545b] w-full sm:w-[158px] flex flex-col gap-[12px] sm:gap-[20px] border border-[var(--color-secondary)] p-[12px] rounded-[12px]`}
+          } cursor-pointer hover:bg-[#2c545b] w-full sm:w-[158px] flex flex-col gap-[12px] sm:gap-[20px] border-2 sm:border border-[var(--color-secondary)] p-[12px] rounded-[12px]`}
         >
           <p className="text-[24px] text-left">{ticket.ticketAmount}</p>
           <p className="text-left text-[16px]">
-            {ticket.ticketType} <br />
+            {ticket.ticketType} ACCESS <br />
             20/52
           </p>
         </button>

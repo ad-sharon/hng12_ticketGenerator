@@ -5,6 +5,7 @@ import TransparentButton from "./transparentBgButton";
 import FilledButton from "./filledBgButton";
 import AvatarUpload from "./avatarUpload";
 import SpecialFormHeader from "./specialFormHeader";
+import email from "../assets/envelope.svg";
 
 const AttendeeDetails = () => {
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ const AttendeeDetails = () => {
   const {
     register,
     handleSubmit,
+    setError,
+    clearErrors,
     watch,
     formState: { errors },
   } = useForm({
@@ -37,7 +40,7 @@ const AttendeeDetails = () => {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault(); // Prevent form submission when Enter is pressed
+      e.preventDefault();
     }
   };
   const onPrevious = () => {
@@ -46,6 +49,14 @@ const AttendeeDetails = () => {
   };
 
   const onSubmit = (data) => {
+    if (!avatarUrl) {
+      setError("avatar", {
+        type: "manual",
+        message: "Please upload a profile photo",
+      });
+      return;
+    }
+    clearErrors();
     console.log("Form data:", data);
     localStorage.removeItem("formData");
     localStorage.removeItem("avatarUrl");
@@ -57,12 +68,15 @@ const AttendeeDetails = () => {
       <SpecialFormHeader topic={"Attendee Details"} stepValue={2} />
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <section className="w-full bg=[var(--color-dark-green)] p-[24px] border-x-2 border-b-2 border-[var(--color-grey-green)] rounded-[32px] flex flex-col gap-[32px]">
+        <section className="w-full bg-[var(--color-dark-green)] p-[24px] border border-[var(--color-tertiary)] shadow-inner rounded-[32px] flex flex-col gap-[32px]">
           {/* Avatar Section */}
-          <section className="flex flex-col gap-[32px] px-[24px] pt-[24px] pb-[48px] rounded-[24px] border border-[var(--color-darker-green)] shadow-inner">
+          <section className="bg-[#052228] flex flex-col gap-[32px] px-[24px] pt-[24px] pb-[48px] rounded-[24px] border border-[var(--color-grey-green)] shadow-inner">
             <p className="font-roboto-text-regular">Upload Profile Photo</p>
             <AvatarUpload setAvatarUrl={setAvatarUrl} />
           </section>
+          {errors.avatar && (
+            <p className="text-red-500">{errors.avatar.message}</p>
+          )}
 
           <hr className="h-[4px] bg-[var(--color-grey-green)] border-0" />
 
@@ -96,22 +110,27 @@ const AttendeeDetails = () => {
             <label htmlFor="email" className="font-roboto-text-regular">
               Enter your email*
             </label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="hello@avioflagos.io"
-              className="w-full rounded-[12px] p-[12px] border border-[var(--color-grey-green)]"
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                  message: "Invalid email format.",
-                },
-              })}
-              aria-describedby="emailError"
-              onKeyDown={handleKeyDown}
-            />
+            <div className="flex items-center w-full border border-[var(--color-grey-green)] rounded-xl h-12 overflow-hidden group hover:border-borderone focus-within:ring-2 focus-within:ring-borderone">
+              <div className="pl-3 pr-1">
+                <img alt="email icon" src={email} className=" w-5 h-5" />
+              </div>
+              <input
+                id="email"
+                aria-required="true"
+                aria-invalid="false"
+                className="flex-1 bg-transparent p-2 outline-none"
+                type="email"
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                    message: "Invalid email format.",
+                  },
+                })}
+                aria-describedby="emailError"
+                onKeyDown={handleKeyDown}
+              />
+            </div>
             {errors.email && (
               <p
                 id="emailError"
@@ -155,10 +174,7 @@ const AttendeeDetails = () => {
 
           {/* for mobile */}
           <section className="w-full gap-[16px] flex flex-col sm:hidden ">
-            <FilledButton
-              text={"Get My Free Ticket"}
-              onClick={handleSubmit(onSubmit)}
-            />
+            <FilledButton text={"Get My Free Ticket"} />
             <TransparentButton text={"Cancel"} onClick={onPrevious} />
           </section>
         </section>

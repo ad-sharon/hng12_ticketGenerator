@@ -1,16 +1,10 @@
 import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
 import axios from "axios";
 import cloud from "../assets/cloud-download.svg";
 
 const AvatarUpload = ({ setAvatarUrl }) => {
   const [image, setImage] = useState(null);
-  const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const {
-    register,
-    formState: { errors },
-  } = useForm();
 
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 
@@ -22,12 +16,11 @@ const AvatarUpload = ({ setAvatarUrl }) => {
       setImage(storedImage);
       setAvatarUrl(storedImage);
     }
-  }, [image]);
+  }, [setAvatarUrl]);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
-      setFile(selectedFile);
       setImage(URL.createObjectURL(selectedFile));
       console.log(image);
       handleFileUpload(selectedFile);
@@ -35,7 +28,9 @@ const AvatarUpload = ({ setAvatarUrl }) => {
   };
 
   const handleFileUpload = async (selectedFile) => {
-    if (!selectedFile) return;
+    if (!selectedFile) {
+      return;
+    }
 
     setLoading(true);
 
@@ -62,28 +57,34 @@ const AvatarUpload = ({ setAvatarUrl }) => {
   };
 
   const handleAvatarReset = () => {
-    // setAvatarClicked(true);
     setImage(null);
-    setFile(null);
     localStorage.removeItem("avatarImage");
   };
 
   return (
     <div className="avatar-upload">
-      <section className="h-[200px] bg-[#000] flex items-center">
-        <section className="w-[240px] h-[240px] flex flex-col items-center justify-center text-center mx-auto rounded-[32px] bg-[var(--color-tertiary)] border-4 border-[var(--color-light-blue)] shadow-inner">
+      <section className="h-[200px] avatar-bg flex items-center">
+        <section className="w-full relative max-w-[240px] h-[240px] flex flex-col items-center justify-center text-center mx-auto rounded-[32px] bg-[var(--color-tertiary)] border-4 border-[var(--color-light-blue)] shadow-inner p-6">
           <label htmlFor="avatarUpload" className="cursor-pointer">
             {image ? (
-              <img
-                src={image}
-                alt="Avatar Preview"
-                className=" w-full rounded-[30px]"
-                onClick={handleAvatarReset}
-              />
+              <section tabIndex={0}>
+                <img
+                  src={image}
+                  alt="Avatar Preview"
+                  className="w-full h-full absolute inset-0 rounded-[32px] object-cover"
+                  onClick={handleAvatarReset}
+                />
+                <div className="absolute inset-0 bg-black/30 transition-opacity focus:bg-[#000] rounded-[32px] opacity-0 hover:opacity-100 group-focus:opacity-100 transition-opacity flex flex-col gap-2 justify-center items-center">
+                  <img src={cloud} className="" alt="cloud icon" />
+                  <p className="mx-[24px]">Drag & drop or click to upload</p>
+                </div>
+              </section>
             ) : (
               <>
-                <img src={cloud} className="m-auto" alt="cloud icon" />
-                <p className="mx-[24px]">Drag & drop or click to upload</p>
+                <div className="absolute inset-0 bg-black/30 rounded-[32px] focus:outline-offset-2 focus:outline-violet-500 flex flex-col justify-center items-center focus-within:ring-2 focus-within:ring-borderone">
+                  <img src={cloud} className="mb-[10px]" alt="cloud icon" />
+                  <p className="mx-[24px]">Drag & drop or click to upload</p>
+                </div>
               </>
             )}
 
@@ -92,23 +93,14 @@ const AvatarUpload = ({ setAvatarUrl }) => {
               type="file"
               accept="image/*"
               id="avatarUpload"
-              className="hidden"
+              className="hidden focus-within:ring-2 focus-within:ring-borderone"
               aria-describedby="avatarError"
             />
-            {errors.avatar && (
-              <p
-                id="avatarError"
-                aria-live="polite"
-                className="text-red-500 text-sm"
-              >
-                {errors.avatar.message}
-              </p>
-            )}
           </label>
         </section>
-
-        {loading && <p className="mt-4 text-blue-500">Uploading...</p>}
       </section>
+
+      {loading && <p className="mt-4 text-blue-500">Uploading...</p>}
     </div>
   );
 };

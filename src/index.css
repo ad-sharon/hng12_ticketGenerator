@@ -11,7 +11,6 @@
   --text-color-dark: #0a0c11;
   --text-color-greyed: #b3b3b3;
   --color-lighter-blue: #2ba4b9;
-  --nav-bg: #05252c; /* still needs 40% opacity */
   --page1-bg: #041e23;
 }
 
@@ -53,4 +52,23 @@
       rgba(36, 160, 181, 0) 100%
     ),
     #02191d;
+}
+
+.nav-bg {
+  background: rgba(5, 37, 44, 0.4);
+  backdrop-filter: blur(2px);
+}
+
+.techember-bg {
+  background: radial-gradient(
+        103.64% 57.39% at 14.02% 32.06%,
+        rgba(36, 160, 181, 0.2) 0%,
+        rgba(36, 160, 181, 0) 100%
+      )
+      /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
+    rgba(10, 12, 17, 0.1);
+}
+
+.avatar-bg {
+  background: rgba(0, 0, 0, 0.2);
 }
