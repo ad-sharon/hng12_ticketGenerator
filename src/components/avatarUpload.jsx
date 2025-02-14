@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import cloud from "../assets/cloud-download.svg";
 
-const AvatarUpload = ({ setAvatarUrl }) => {
+const AvatarUpload = ({ setAvatarUrl, onClick }) => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -39,8 +39,6 @@ const AvatarUpload = ({ setAvatarUrl }) => {
     formData.append("upload_preset", "hng_tickets");
     console.log(formData);
 
-    console.log(cloudName);
-
     try {
       const response = await axios.post(
         `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
@@ -54,7 +52,7 @@ const AvatarUpload = ({ setAvatarUrl }) => {
     } catch (err) {
       console.error(
         "Upload failed:",
-        err.response ? err.response.data : err.message || "Unknown"
+        err.response ? err.response.data : err.message || "Unknown error o"
       );
     } finally {
       setLoading(false);
@@ -67,27 +65,40 @@ const AvatarUpload = ({ setAvatarUrl }) => {
   };
 
   return (
-    <div className="avatar-upload">
-      <section className="h-[200px] avatar-bg flex items-center">
-        <section className="w-full relative max-w-[240px] h-[240px] flex flex-col items-center justify-center text-center mx-auto rounded-[32px] bg-[var(--color-tertiary)] border-4 border-[var(--color-light-blue)] shadow-inner p-6">
+    <div className="avatar-upload" onClick={onClick}>
+      <section className="h-50 avatar-bg flex items-center">
+        <section
+          tabIndex={0}
+          onKeyDown={(e) =>
+            e.key === "Enter" && document.getElementById("avatarUpload").click()
+          }
+          className="w-full relative max-w-60 h-60 focus-within:border-white flex flex-col text-center mx-auto rounded-[32px] bg-[var(--color-tertiary)] border-4 border-[var(--color-light-blue)] shadow-inner p-6"
+        >
           <label htmlFor="avatarUpload" className="cursor-pointer">
             {image ? (
-              <section tabIndex={0}>
+              <section>
                 <img
                   src={image}
                   alt="Avatar Preview"
                   className="w-full h-full absolute inset-0 rounded-[32px] object-cover"
                   onClick={handleAvatarReset}
                 />
-                <div className="absolute inset-0 bg-black/30 transition-opacity focus:bg-[#000] rounded-[32px] opacity-0 hover:opacity-100 group-focus:opacity-100 transition-opacity flex flex-col gap-2 justify-center items-center">
-                  <img src={cloud} className="" alt="cloud icon" />
+                <div className="absolute inset-0 bg-black/30 rounded-[32px] opacity-0 hover:opacity-100 transition-opacity flex flex-col gap-2 justify-center items-center">
+                  <img src={cloud} alt="cloud icon" />
                   <p className="mx-[24px]">Drag & drop or click to upload</p>
                 </div>
               </section>
             ) : (
               <>
-                <div className="absolute inset-0 bg-black/30 rounded-[32px] focus:outline-offset-2 focus:outline-violet-500 flex flex-col justify-center items-center focus-within:ring-2 focus-within:ring-borderone">
-                  <img src={cloud} className="mb-[10px]" alt="cloud icon" />
+                <div
+                  tabIndex={0}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" &&
+                    document.getElementById("avatarUpload").click()
+                  }
+                  className="absolute inset-0 bg-black/30 rounded-[32px] flex flex-col gap-2 focus-within:ring-2 focus-within:ring-white justify-center items-center"
+                >
+                  <img src={cloud} alt="cloud icon" />
                   <p className="mx-[24px]">Drag & drop or click to upload</p>
                 </div>
               </>
@@ -98,14 +109,16 @@ const AvatarUpload = ({ setAvatarUrl }) => {
               type="file"
               accept="image/*"
               id="avatarUpload"
-              className="hidden focus-within:ring-2 focus-within:ring-borderone"
+              className="hidden"
               aria-describedby="avatarError"
             />
           </label>
         </section>
       </section>
 
-      {loading && <p className="mt-4 text-blue-500">Uploading...</p>}
+      {loading && (
+        <p className="mt-4 text-white">Please wait while photo uploads...</p>
+      )}
     </div>
   );
 };

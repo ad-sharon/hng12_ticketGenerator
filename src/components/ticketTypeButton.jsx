@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 
+const tickets = [
+  { ticketType: "REGULAR", ticketAmount: "Free" },
+  { ticketType: "VIP", ticketAmount: "$50" },
+  { ticketType: "VVIP", ticketAmount: "$150" },
+];
+
 export default function TicketTypeButton({ setValue }) {
   const [selected, setSelected] = useState(0);
-
-  const tickets = [
-    { ticketType: "REGULAR", ticketAmount: "Free" },
-    { ticketType: "VIP", ticketAmount: "$50" },
-    { ticketType: "VVIP", ticketAmount: "$150" },
-  ];
 
   const handleClick = (index) => {
     const selectedTicket = tickets[index].ticketType;
     setSelected(index);
-    setValue("ticketType", selectedTicket); //set value in local storage
-    localStorage.setItem("ticketType", selectedTicket); //persist value in form
+    setValue("ticketType", selectedTicket);
+    localStorage.setItem("ticketType", selectedTicket);
   };
 
   useEffect(() => {
@@ -37,11 +37,11 @@ export default function TicketTypeButton({ setValue }) {
           key={index}
           onClick={() => handleClick(index)}
           className={`${
-            selected === index ? "bg-[#12464E]" : ""
-          } cursor-pointer hover:bg-[#2c545b] w-full sm:w-[158px] flex flex-col gap-[12px] sm:gap-[20px] border-2 sm:border border-[var(--color-secondary)] p-[12px] rounded-[12px]`}
+            selected === index ? "bg-[var(--color-bluish-green)]" : ""
+          } cursor-pointer hover:bg-[var(--color-blurry-green)] w-full sm:w-[158px] flex flex-col gap-3 sm:gap-5 border-2 sm:border border-[var(--color-secondary)] p-3 rounded-xl`}
         >
-          <p className="text-[24px] text-left">{ticket.ticketAmount}</p>
-          <p className="text-left text-[16px]">
+          <p className="text-2xl text-left">{ticket.ticketAmount}</p>
+          <p className="text-left text-base">
             {ticket.ticketType} ACCESS <br />
             20/52
           </p>

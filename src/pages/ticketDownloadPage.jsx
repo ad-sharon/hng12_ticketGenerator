@@ -4,7 +4,6 @@ const TicketDownloadPage = () => {
   return (
     <section className="w-full background flex flex-col gap-[46px]">
       <div className="block sm:hidden">
-        {/* special nav for mobile */}
         <Navbar />
       </div>
       <TicketDownload />

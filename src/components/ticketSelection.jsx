@@ -39,37 +39,35 @@ const TicketSelection = () => {
 
   const onCancel = (e) => {
     e.preventDefault();
-    console.log("Resetting form...");
     reset({ ticketType: " ", numberOfTickets: "" });
     localStorage.removeItem("formData");
   };
 
   const onSubmit = (formData) => {
     console.log(formData);
-    // localStorage.removeItem("formData");
-    // console.log("removing data", formData);
+
     navigate("/attendeeForm");
   };
 
   return (
-    <section className="bg-[#041e23] w-[95%] md:w-[700px] border border-[var(--color-tertiary)] rounded-[40px] flex flex-col gap-[32px] mx-auto text-white p-[48px] mb-[112px]">
+    <section className="bg-[#041e23] w-[95%] md:w-[700px] border border-[var(--color-tertiary)] rounded-[40px] flex flex-col gap-8 mx-auto text-white p-10 mb-[112px]">
       <SpecialFormHeader topic={"Ticket Selection"} stepValue={1} />
 
       {/* Techember section */}
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full bg-[var(--color-dark-green)] px-[24px] py-[16px] sm:py-[24px] border-x-2 border-b-2 border-[var(--color-grey-green)] rounded-[32px] flex flex-col gap-[32px]"
+        className="w-full bg-[var(--color-dark-green)] px-5 py-[16px] sm:py-[24px] border-x-2 border-b-2 border-[var(--color-greyish-green)] rounded-[32px] flex flex-col gap-[32px]"
       >
         {/* Techember sign */}
-        <section className="techember-bg text-center border-x border-b border-[#07373F] rounded-[24px] shadow-inner p-[14px] sm:p-[20px]">
-          <p className="w-full whitespace-nowrap font-roadrage text-[48px] sm:text-[62px] ">
+        <section className="techember-bg text-center border-x border-b border-[var(--color-greyish-green)] rounded-[24px] shadow-inner p-1 sm:p-5">
+          <p className="w-full whitespace-nowrap font-roadrage text-[34px] sm:text-[62px] ">
             Techember Fest &quot;25
           </p>
-          <p className="w-full sm:max-w-[340px] mx-auto text-[14px] font-roboto sm:font-roboto-text-regular">
+          <p className="w-full max-w-[340px] mx-auto text-[14px] font-roboto sm:font-roboto sm:text-base">
             Join an unforgettable experience at [Event Name]! Secure your spot
             now.
           </p>
-          <section className="w-full mt-7 sm:mt-0 justify-center items-center block sm:flex font-roboto-text-regular pt-[16px]">
+          <section className="w-full mt-7 sm:mt-0 justify-center items-center block sm:flex font-roboto text-base pt-4">
             <p>📍[Event Location] </p>
             <span className="hidden sm:block mx-3"> | | </span>
             <p>March 15, 2025 | 7:00 PM</p>
@@ -79,18 +77,18 @@ const TicketSelection = () => {
         <hr className="h-[4px] bg-[var(--color-grey-green)] border-0" />
 
         {/* Ticket type section */}
-        <section className="flex flex-col gap-[8px]">
-          <p className="font-roboto-text-regular">Select Ticket Type:</p>
-          <section className="w-full flex flex-col gap-[16px] sm:flex sm:flex-row justify-between rounded-[24px] bg-[var(--color-darker-green)] p-[16px] border border-[var(--color-grey-green)] shadow-inner ">
+        <section className="flex flex-col gap-2">
+          <p className="font-roboto text-base">Select Ticket Type:</p>
+          <section className="w-full flex flex-col gap-4 sm:flex sm:flex-row justify-between rounded-3xl bg-[var(--color-darker-green)] p-4 border border-[var(--color-grey-green)] shadow-inner">
             <TicketTypeButton setValue={setValue} />
           </section>
         </section>
 
         {/* Number of tickets section */}
-        <section className="flex flex-col gap-[8px]">
-          <p className="font-roboto-text-regular">Number of Tickets</p>
+        <section className="flex flex-col gap-2">
+          <p className="font-roboto text-base">Number of Tickets</p>
           <select
-            className="border border-[var(--color-grey-green)] rounded-[12px] p-[12px] cursor-pointer"
+            className="border border-[var(--color-grey-green)] rounded-3 p-3 cursor-pointer"
             name="numberOfTickets"
             id="numberOfTickets"
             {...register("numberOfTickets", {
@@ -122,13 +120,13 @@ const TicketSelection = () => {
         </section>
 
         {/* Cancel and Next buttons */}
-        <section className="w-full gap-[24px] hidden sm:flex ">
+        <section className="w-full gap-6 hidden sm:flex ">
           <TransparentButton text={"Cancel"} onClick={onCancel} />
           <FilledButton text={"Next"} onClick={handleSubmit(onSubmit)} />
         </section>
 
         {/* for mobile */}
-        <section className="w-full gap-[16px] flex flex-col sm:hidden ">
+        <section className="w-full gap-4 flex flex-col sm:hidden ">
           <FilledButton text={"Next"} onClick={handleSubmit(onSubmit)} />
           <TransparentButton text={"Cancel"} onClick={onCancel} />
         </section>

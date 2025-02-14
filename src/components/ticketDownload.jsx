@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import TransparentButton from "./transparentBgButton";
 import FilledButton from "./filledBgButton";
@@ -10,12 +9,9 @@ import ticketBarcode from "../assets/ticketBarcode.svg";
 
 const TicketDownload = () => {
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(true);
   const [avatarUrl, setAvatarUrl] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(null);
-
-  const { reset } = useForm();
 
   useEffect(() => {
     const storedData = localStorage.getItem("formData");
@@ -27,14 +23,12 @@ const TicketDownload = () => {
   useEffect(() => {
     const storedImage = localStorage.getItem("avatarImage");
     if (storedImage) {
-      setLoading(true);
       setAvatarUrl(storedImage);
-      setLoading(false);
     }
+    setLoading(false);
   }, []);
 
   const onRefresh = () => {
-    // reset(formData);
     localStorage.clear();
     console.log(formData);
     navigate("/");
@@ -52,37 +46,36 @@ const TicketDownload = () => {
 
       {/* for mobile, one under nav */}
       <section
-        className={`absolute hidden sm:flex md:hidden z-99 justify-center gap-9 text-lg cursor-pointer`}
+        className={`absolute hidden top-25 sm:flex md:hidden z-99 justify-between w-[80%] p-1 font-main text-lg cursor-pointer`}
       >
         <a className="text-white">Events</a>
         <a className="text-[var(--text-color-greyed)]">My Tickets</a>
         <a className="text-[var(--text-color-greyed)]">About Project</a>
       </section>
 
-      <section className="h-auto w-[95%] md:w-[700px] border border-[var(--color-tertiary)] rounded-[40px] flex flex-col gap-[32px] mx-auto text-white p-[48px]">
+      <section className="w-[95%] md:w-[700px] border border-[var(--color-tertiary)] rounded-[40px] flex flex-col gap-8 text-[var(--text-color-light)] p-12">
         <SpecialFormHeader topic={"Ready"} stepValue={3} />
 
         {/* ticket section */}
-        <section className="flex flex-col gap-[32px] items-center text-center">
+        <section className="flex flex-col gap-8 items-center text-center">
           <section>
             <p className="font-alatsi text-[32px]">Your Ticket is Booked! </p>
-            <p className="font-roboto-text-regular">
+            <p className="font-roboto text-base">
               Check your email for a copy or you can <strong>download</strong>
             </p>
           </section>
 
-          {/* main ticket */}
+          {/* main ticket part*/}
           {formData ? (
             <section className="relative">
               <img src={ticketOutline} alt="" className="w-full" />
 
               {/* ticket content */}
-              <section className="absolute  inset-0 flex flex-col justify-between">
-                <section className="flex flex-col p-[20px] flex-grow">
-                  {/* border line */}
-                  <section className="border border-[var(--color-light-blue)] h-[90%] sm:h-full flex flex-col justify-between rounded-[16px] p-[14px]">
+              <section className="absolute inset-0 flex flex-col">
+                <section className="flex flex-col p-5 flex-grow">
+                  <section className="border border-[var(--color-light-blue)] h-full max-h-[80%] flex flex-col justify-between rounded-2xl px-3 pt-0 sm:pt-3 pb-3 ">
                     <section>
-                      <p className="font-roadrage text-[34px]">
+                      <p className="font-300 font-roadrage max-h-[50px]">
                         Techember Fest &quot;25
                       </p>
                       <p className="font-roboto text-[10px]">
@@ -93,40 +86,39 @@ const TicketDownload = () => {
                       </p>
                     </section>
 
-                    {/* avatar image */}
-                    {avatarUrl ? (
-                      <img
-                        src={avatarUrl}
-                        alt="Avatar"
-                        className="w-[140px] h-[140px] border-4 border-[var(--color-light-blue)] mx-auto rounded-[12px] "
-                      ></img>
+                    {loading ? (
+                      <section>
+                        <p>Loading...</p>
+                      </section>
                     ) : (
-                      <p>No avatar uploaded</p>
-                    )}
-                    {loading && (
-                      <p className="mt-4 text-blue-500">Uploading...</p>
+                      (avatarUrl && (
+                        <img
+                          src={avatarUrl}
+                          alt="Avatar"
+                          className="w-[110px] sm:w-[120px] md:w-[140px] max-w-[140px] h-[110px] sm:h-[120px] md:h-[140px] max-h-[140px] border-4 border-[var(--color-light-blue)] object-fill mx-auto rounded-xl"
+                        />
+                      )) ||
+                      (!avatarUrl && <p>No avatar uploaded</p>)
                     )}
 
                     {/* table section */}
-                    <section className="w-full bg-[#08343C] flex flex-col justify-center items-center rounded-[8px] border border-[#133D44] h-auto">
+                    <section className="w-full max-h-[90%] bg-[var(--color-calm-green)] flex flex-col justify-center items-center rounded-lg border border-[var(--color-nice-green)] ">
                       {/* 1 */}
-                      <section className="flex justify-center">
-                        {/* a */}
-                        <div className="border-r border-b l border-[#12464E] flex flex-col gap-[4px] p-[4px] flex-1">
+                      <section className="flex w-full justify-center">
+                        <div className="border-r border-b border-[var(--color-bluish-green)] flex flex-col gap-1 p-1 text-left w-full">
                           <p className="font-roboto text-[10px] opacity-33">
                             Enter your name
                           </p>
-                          <p className="font-roboto text-[12px]">
+                          <p className="font-roboto text-xs font-bold">
                             {formData.fullName || "No record"}
                           </p>
                         </div>
 
-                        {/* b */}
-                        <div className="border-b  border-[#12464E] flex flex-col flex-1 gap-[4px] p-[4px]">
+                        <div className=" border-b border-[var(--color-bluish-green)] flex flex-col gap-1 p-1 text-left w-full">
                           <p className="font-roboto text-[10px] opacity-33">
-                            Enter your email
+                            Enter your email*
                           </p>
-                          <p className="font-roboto text-[12px]">
+                          <p className="font-roboto text-xs w-[90%] sm:w-full truncate">
                             {formData.email || "No record"}
                           </p>
                         </div>
@@ -134,31 +126,34 @@ const TicketDownload = () => {
 
                       {/* 2 */}
                       <section className="flex w-full justify-center">
-                        <div className="border-e border-b border-[#12464E] flex flex-col flex-1 gap-[4px] p-[4px]">
+                        <div className="border-r border-b border-[var(--color-bluish-green)] flex flex-col gap-1 p-1  w-full text-left">
                           <p className="font-roboto text-[10px] opacity-33">
                             Ticket Type:
                           </p>
-                          <p className="font-roboto text-[12px]">
+                          <p className="font-roboto text-xs font-bold">
                             {formData.ticketType || "No record"}
                           </p>
                         </div>
-                        <div className="border-b border-[#12464E] flex flex-col flex-1 gap-[4px] p-[4px]">
+
+                        <div className=" border-b border-[var(--color-bluish-green)] text-left flex flex-col gap-1 p-1 w-full">
                           <p className="font-roboto text-[10px] opacity-33">
                             Ticket For:
                           </p>
-                          <p className="font-roboto text-[12px]">
+                          <p className="font-roboto text-xs w-full font-bold">
                             {formData.numberOfTickets || "No record"}
                           </p>
                         </div>
                       </section>
 
                       {/* 3 */}
-                      <section className=" text-left flex flex-col gap-[4px] p-[4px]">
+                      <div className="flex flex-col gap-1 p-1 text-left w-full">
                         <p className="font-roboto text-[10px] opacity-33">
                           Special Request
                         </p>
-                        <p className="font-roboto text-[12px]">Have fun</p>
-                      </section>
+                        <p className="font-roboto text-xs w-full font-bold truncate">
+                          {formData.specialRequest || "No record"}
+                        </p>
+                      </div>
                     </section>
                   </section>
 
@@ -173,7 +168,7 @@ const TicketDownload = () => {
           )}
 
           {/* buttons */}
-          <section className="w-full gap-[24px] hidden sm:flex ">
+          <section className="w-full gap-6 hidden sm:flex">
             <TransparentButton
               text={"Book Another Ticket"}
               onClick={onRefresh}
@@ -182,7 +177,7 @@ const TicketDownload = () => {
           </section>
 
           {/* for mobile */}
-          <section className="w-full gap-[16px] flex flex-col sm:hidden ">
+          <section className="w-full gap-4 flex flex-col sm:hidden ">
             <FilledButton text={"Download Ticket"} onClick={handleSubmit} />
 
             <TransparentButton

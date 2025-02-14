@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import TransparentButton from "./transparentBgButton";
 import FilledButton from "./filledBgButton";
@@ -9,6 +9,7 @@ import email from "../assets/envelope.svg";
 
 const AttendeeDetails = () => {
   const navigate = useNavigate();
+
   const [avatarUrl, setAvatarUrl] = useState(
     localStorage.getItem("avatarUrl") || ""
   );
@@ -43,12 +44,13 @@ const AttendeeDetails = () => {
       e.preventDefault();
     }
   };
+
   const onPrevious = () => {
-    console.log("Navigating to previous");
+    console.log("Navigating to previous page");
     navigate("/");
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = () => {
     if (!avatarUrl) {
       setError("avatar", {
         type: "manual",
@@ -56,40 +58,43 @@ const AttendeeDetails = () => {
       });
       return;
     }
-    clearErrors();
-    console.log("Form data:", data);
+    clearErrors("avatar");
     localStorage.removeItem("formData");
     localStorage.removeItem("avatarUrl");
+    console.log(formData);
     navigate("/downloadTicket");
   };
 
   return (
-    <section className="w-[95%] md:w-[700px] border border-[var(--color-tertiary)] rounded-[40px] flex flex-col gap-[32px] mx-auto text-white p-[48px] mb-[112px]">
+    <section className="w-[95%] md:w-[700px] border border-[var(--color-tertiary)] rounded-[40px] flex flex-col gap-8 mx-auto text-white p-12 /mb-[112px]">
       <SpecialFormHeader topic={"Attendee Details"} stepValue={2} />
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <section className="w-full bg-[var(--color-dark-green)] p-[24px] border border-[var(--color-tertiary)] shadow-inner rounded-[32px] flex flex-col gap-[32px]">
+        <section className="w-full bg-[var(--color-dark-green)] p-6 border border-[var(--color-tertiary)] shadow-inner rounded-[32px] flex flex-col gap-8">
           {/* Avatar Section */}
-          <section className="bg-[#052228] flex flex-col gap-[32px] px-[24px] pt-[24px] pb-[48px] rounded-[24px] border border-[var(--color-grey-green)] shadow-inner">
-            <p className="font-roboto-text-regular">Upload Profile Photo</p>
-            <AvatarUpload setAvatarUrl={setAvatarUrl} />
+          <section className="bg-[var(--color-darker-green)] flex flex-col gap-8 px-6 pt-6 pb-12 rounded-3xl border border-[var(--color-greyish-green)] shadow-inner">
+            <p className="font-roboto text-base">Upload Profile Photo</p>
+            <AvatarUpload
+              setAvatarUrl={setAvatarUrl}
+              onClick={() => clearErrors("avatar")}
+            />
           </section>
           {errors.avatar && (
             <p className="text-red-500">{errors.avatar.message}</p>
           )}
 
-          <hr className="h-[4px] bg-[var(--color-grey-green)] border-0" />
+          <hr className="h-1 bg-[var(--color-greyish-green)] border-0" />
 
           {/* Name Input */}
-          <section className="flex flex-col gap-[8px]">
-            <label htmlFor="fullname" className="font-roboto-text-regular">
+          <section className="flex flex-col gap-2">
+            <label htmlFor="fullname" className="font-roboto text-base">
               Enter your name
             </label>
             <input
               type="text"
               name="fullname"
               id="fullname"
-              className="w-full rounded-[12px] p-[12px] border border-[var(--color-grey-green)]"
+              className="w-full rounded-xl p-3 border border-[var(--color-greyish-green)]"
               {...register("fullName", { required: "Full Name is required" })}
               aria-describedby="fullNameError"
               onKeyDown={handleKeyDown}
@@ -106,18 +111,20 @@ const AttendeeDetails = () => {
           </section>
 
           {/* Email Input */}
-          <section className="flex flex-col gap-[8px]">
-            <label htmlFor="email" className="font-roboto-text-regular">
+          <section className="flex flex-col gap-2">
+            <label htmlFor="email" className="font-roboto text-base">
               Enter your email*
             </label>
-            <div className="flex items-center w-full border border-[var(--color-grey-green)] rounded-xl h-12 overflow-hidden group hover:border-borderone focus-within:ring-2 focus-within:ring-borderone">
-              <div className="pl-3 pr-1">
-                <img alt="email icon" src={email} className=" w-5 h-5" />
+            <div className="flex items-center pl-1 w-full border border-[var(--color-greyish-green)] rounded-xl h-12 overflow-hidden focus-within:ring-1 ">
+              <div className="">
+                <img
+                  alt="email icon"
+                  src={email}
+                  className="min-w-5 w-full h-full"
+                />
               </div>
               <input
                 id="email"
-                aria-required="true"
-                aria-invalid="false"
                 className="flex-1 bg-transparent p-2 outline-none"
                 type="email"
                 {...register("email", {
@@ -143,16 +150,16 @@ const AttendeeDetails = () => {
           </section>
 
           {/* Special Request Textarea */}
-          <section className="flex flex-col gap-[8px]">
+          <section className="flex flex-col gap-2">
             <label
               htmlFor="specialRequest"
-              className="hidden sm:block font-roboto-text-regular"
+              className="hidden sm:block font-roboto text-base"
             >
               Special Request?
             </label>
             <label
               htmlFor="specialRequest"
-              className="block sm:hidden font-roboto-text-regular"
+              className="block sm:hidden font-roboto text-base"
             >
               About the Project
             </label>
@@ -160,20 +167,20 @@ const AttendeeDetails = () => {
               name="specialRequest"
               id="specialRequest"
               placeholder="Textarea"
-              className="h-[127px] rounded-[12px] p-[12px] border border-[var(--color-grey-green)]"
+              className="h-32 rounded-xl p-3 border border-[var(--color-greyish-green)]"
               {...register("specialRequest")}
               onKeyDown={handleKeyDown}
             ></textarea>
           </section>
 
           {/* buttons */}
-          <section className="w-full gap-[24px] hidden sm:flex ">
+          <section className="w-full gap-6 hidden sm:flex ">
             <TransparentButton text={"Back"} onClick={onPrevious} />
             <FilledButton text={"Get My Free Ticket"} />
           </section>
 
           {/* for mobile */}
-          <section className="w-full gap-[16px] flex flex-col sm:hidden ">
+          <section className="w-full gap-4 flex flex-col sm:hidden ">
             <FilledButton text={"Get My Free Ticket"} />
             <TransparentButton text={"Cancel"} onClick={onPrevious} />
           </section>

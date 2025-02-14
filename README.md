@@ -1,1 +1,1 @@
-# hng12_ticketGenerator
+# Event Ticket Generator

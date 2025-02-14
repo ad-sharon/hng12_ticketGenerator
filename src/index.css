@@ -4,13 +4,19 @@
   --color-primary: #02191d;
   --color-secondary: #197686;
   --color-tertiary: #0e464f;
+  --color-lighter-blue: #2ba4b9;
   --color-light-blue: #24a0b5;
+  --color-bluish-green: #12464e;
+  --color-blurry-green: #2c545b;
   --color-dark-green: #08252b;
   --color-darker-green: #052228;
-  --color-grey-green: #07373f;
+  --color-greyish-green: #07373f;
+  --color-calm-green: #08343c;
+  --color-nice-green: #133d44;
+  --color-dark-blue: #041e23;
+  --text-color-light: #d9d9d9;
   --text-color-dark: #0a0c11;
   --text-color-greyed: #b3b3b3;
-  --color-lighter-blue: #2ba4b9;
   --page1-bg: #041e23;
 }
 
@@ -39,11 +45,6 @@
   font-family: "Alatsi", serif;
 }
 
-.font-roboto-text-regular {
-  font-family: "Roboto", sans-serif;
-  font-size: 16px;
-}
-
 /* gradient backgorunds */
 .background {
   background: radial-gradient(
@@ -61,14 +62,26 @@
 
 .techember-bg {
   background: radial-gradient(
-        103.64% 57.39% at 14.02% 32.06%,
-        rgba(36, 160, 181, 0.2) 0%,
-        rgba(36, 160, 181, 0) 100%
-      )
-      /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
+      103.64% 57.39% at 14.02% 32.06%,
+      rgba(36, 160, 181, 0.2) 0%,
+      rgba(36, 160, 181, 0) 100%
+    )
     rgba(10, 12, 17, 0.1);
 }
 
 .avatar-bg {
   background: rgba(0, 0, 0, 0.2);
+}
+
+/* media queries */
+@media screen and (max-width: 360px) {
+  .font-300 {
+    font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 361px) {
+  .font-300 {
+    font-size: 34px;
+  }
 }
