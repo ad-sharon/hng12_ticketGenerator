@@ -24,7 +24,7 @@
 @font-face {
   font-family: "JejuMyeongjo";
   src: url("/assets/fonts/JejuMyeongjo-Regular.woff2") format("woff2"),
-    url("/assets/fonts/my-font.woff") format("woff");
+    url("/assets/fonts/JejuMyeongjo-Regular.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
