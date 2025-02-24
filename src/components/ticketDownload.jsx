@@ -1,9 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useToPng } from '@hugocxl/react-to-image'
+import { useToPng } from "@hugocxl/react-to-image";
 import TransparentButton from "./transparentBgButton";
 import FilledButton from "./filledBgButton";
-import Navbar from "../components/navbar";
 import SpecialFormHeader from "../components/specialFormHeader";
 import ticketOutline from "../assets/ticketOutline.svg";
 import ticketBarcode from "../assets/ticketBarcode.svg";
@@ -24,7 +23,7 @@ const TicketDownload = () => {
     onError: (error) => {
       console.error("Error generating image:", error);
     },
-  })
+  });
 
   useEffect(() => {
     const storedData = localStorage.getItem("formData");
@@ -54,25 +53,6 @@ const TicketDownload = () => {
 
   return (
     <section className="flex flex-col items-center">
-      {/* special nav for big screens */}
-      <Navbar addPosition={true} />
-
-      {/* for mobile, one under nav */}
-      <section
-        className={`absolute hidden top-25 sm:flex md:hidden z-99 justify-between w-[80%] p-1 font-main text-lg cursor-pointer`}
-      >
-        <a className="text-white" onClick={() => navigate("/")}>
-          Events
-        </a>
-        <a className="text-[var(--text-color-greyed)]">My Tickets</a>
-        <a
-          className="text-[var(--text-color-greyed)]"
-          onClick={() => navigate("/about")}
-        >
-          About Project
-        </a>
-      </section>
-
       <section className="w-[95%] md:w-[700px] border border-[var(--color-tertiary)] rounded-[40px] flex flex-col gap-8 text-[var(--text-color-light)] p-12">
         <SpecialFormHeader topic={"Ready"} stepValue={3} />
 
@@ -198,7 +178,10 @@ const TicketDownload = () => {
 
           {/* for mobile */}
           <section className="w-full gap-4 flex flex-col sm:hidden ">
-            <FilledButton  text={state.isConverting ? "Generating..." : "Download Ticket"} onClick={handleSubmit} />
+            <FilledButton
+              text={state.isConverting ? "Generating..." : "Download Ticket"}
+              onClick={handleSubmit}
+            />
 
             <TransparentButton
               text={"Book Another Ticket"}
