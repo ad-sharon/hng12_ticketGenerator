@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useToPng } from '@hugocxl/react-to-image'
 import TransparentButton from "./transparentBgButton";
 import FilledButton from "./filledBgButton";
 import Navbar from "../components/navbar";
@@ -8,11 +9,22 @@ import ticketOutline from "../assets/ticketOutline.svg";
 import ticketBarcode from "../assets/ticketBarcode.svg";
 
 const TicketDownload = () => {
-  // heyheyhey
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [formData, setFormData] = useState(null);
+
+  const [state, convertToPng, ref] = useToPng({
+    onSuccess: (dataUrl) => {
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = "Techember_Ticket.png";
+      link.click();
+    },
+    onError: (error) => {
+      console.error("Error generating image:", error);
+    },
+  })
 
   useEffect(() => {
     const storedData = localStorage.getItem("formData");
@@ -35,9 +47,9 @@ const TicketDownload = () => {
     navigate("/");
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log("Form data:", formData);
-    navigate("/");
+    convertToPng();
   };
 
   return (
@@ -75,7 +87,7 @@ const TicketDownload = () => {
 
           {/* main ticket part*/}
           {formData ? (
-            <section className="relative">
+            <section ref={ref} className="relative">
               <img src={ticketOutline} alt="" className="w-full" />
 
               {/* ticket content */}
@@ -186,7 +198,7 @@ const TicketDownload = () => {
 
           {/* for mobile */}
           <section className="w-full gap-4 flex flex-col sm:hidden ">
-            <FilledButton text={"Download Ticket"} onClick={handleSubmit} />
+            <FilledButton  text={state.isConverting ? "Generating..." : "Download Ticket"} onClick={handleSubmit} />
 
             <TransparentButton
               text={"Book Another Ticket"}
