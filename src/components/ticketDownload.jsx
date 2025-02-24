@@ -104,21 +104,21 @@ const TicketDownload = () => {
                     {/* table section */}
                     <section className="w-full max-h-[90%] bg-[var(--color-calm-green)] flex flex-col justify-center items-center rounded-lg border border-[var(--color-nice-green)] ">
                       {/* 1 */}
-                      <section className="flex w-full justify-center">
-                        <div className="border-r border-b border-[var(--color-bluish-green)] flex flex-col gap-1 p-1 text-left w-full">
+                      <section className="flex w-full">
+                        <div className="border-r text-left min-w-[50%] border-b border-[var(--color-bluish-green)] flex flex-col gap-1 p-1">
                           <p className="font-roboto text-[10px] opacity-33">
                             Enter your name
                           </p>
-                          <p className="font-roboto text-xs font-bold">
+                          <p className="font-roboto text-xs font-bold whitespace-wrap">
                             {formData.fullName || "No record"}
                           </p>
                         </div>
 
-                        <div className=" border-b border-[var(--color-bluish-green)] flex flex-col gap-1 p-1 text-left w-full">
-                          <p className="font-roboto text-[10px] opacity-33">
+                        <div className=" border-b min-w-[50%] text-left border-[var(--color-bluish-green)] flex flex-col gap-1 p-1">
+                          <p className="font-roboto text-[10px]  opacity-33">
                             Enter your email*
                           </p>
-                          <p className="font-roboto text-xs w-[90%] sm:w-full truncate">
+                          <p className="font-roboto text-xs sm:w-full truncate whitespace-wrap">
                             {formData.email || "No record"}
                           </p>
                         </div>
@@ -167,13 +167,20 @@ const TicketDownload = () => {
             <p>No data for ticket</p>
           )}
 
+          <p className="font-bold text-base text-red-500">
+            Download using a PC for better results
+          </p>
+
           {/* buttons */}
           <section className="w-full gap-6 hidden sm:flex">
             <TransparentButton
               text={"Book Another Ticket"}
               onClick={onRefresh}
             />
-            <FilledButton text={"Download Ticket"} onClick={handleSubmit} />
+            <FilledButton
+              text={state.isConverting ? "Generating..." : "Download Ticket"}
+              onClick={handleSubmit}
+            />
           </section>
 
           {/* for mobile */}

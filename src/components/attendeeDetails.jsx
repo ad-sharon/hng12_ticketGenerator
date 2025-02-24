@@ -14,6 +14,10 @@ const AttendeeDetails = () => {
     localStorage.getItem("avatarUrl") || ""
   );
 
+  const [ticketType, setTicketType] = useState(
+    localStorage.getItem("ticketType") || ""
+  );
+
   const {
     register,
     handleSubmit,
@@ -37,7 +41,14 @@ const AttendeeDetails = () => {
     if (avatarUrl) {
       localStorage.setItem("avatarUrl", avatarUrl);
     }
-  }, [formData, avatarUrl]);
+    if (ticketType) {
+      localStorage.setItem("ticketType", ticketType);
+
+      if (ticketType === "REGULAR") {
+        setTicketType("Free");
+      }
+    }
+  }, [formData, avatarUrl, ticketType]);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -176,12 +187,12 @@ const AttendeeDetails = () => {
           {/* buttons */}
           <section className="w-full gap-6 hidden sm:flex ">
             <TransparentButton text={"Back"} onClick={onPrevious} />
-            <FilledButton text={"Get My Free Ticket"} />
+            <FilledButton text={`Get My ${ticketType} Ticket`} />
           </section>
 
           {/* for mobile */}
           <section className="w-full gap-4 flex flex-col sm:hidden ">
-            <FilledButton text={"Get My Free Ticket"} />
+            <FilledButton text={`Get My ${ticketType} Ticket`} />
             <TransparentButton text={"Cancel"} onClick={onPrevious} />
           </section>
         </section>

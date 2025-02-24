@@ -86,17 +86,17 @@ const Navbar = ({ addPosition }) => {
 
       <button
         type="button"
-        className="group bg-[var(--text-color-light)] hover:border hover:border-[var(--text-color-light)] rounded-xl flex items-center cursor-pointer px-6 py-4 text-[var(--text-color-dark)] hover:bg-[var(--color-light-blue)]"
+        className="text-[0.7rem] font-bold sm:font-normal sm:text-base whitespace-nowrap group bg-[var(--text-color-light)] hover:border hover:border-[var(--text-color-light)] rounded-xl flex items-center cursor-pointer px-2 sm:px-6 py-4 text-[var(--text-color-dark)] hover:bg-[var(--color-light-blue)]"
       >
         MY TICKETS
         <img
           src={arrow}
-          className="ms-2 group-hover:hidden"
+          className="ms-1 sm:ms-2 group-hover:hidden"
           alt="right arrow"
         />
         <img
           src={arrowWhite}
-          className="ms-[8px] hidden group-hover:block"
+          className="ms-[4px] sm:ms-[8px] hidden group-hover:block"
           alt="right arrow up white"
         />
       </button>
